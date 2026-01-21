@@ -34,7 +34,7 @@ const Login = () => {
 
     try {
       const res = await loginUser(form);
-      login(res.data.token, res.data.user, remember);
+      login(res.data.token );             // only token pass
       navigate("/profile");
     } catch (err) {
       setError(err.response?.data?.message || "Login failed");

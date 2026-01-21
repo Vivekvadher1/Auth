@@ -10,7 +10,8 @@ const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     // const token = localStorage.getItem("token");
-    const token = localStorage.getItem("token") || sessionStorage.getItem("token");
+    const token =
+      localStorage.getItem("token") || sessionStorage.getItem("token");
 
     if (!token) {
       setLoading(false);
@@ -25,26 +26,31 @@ const AuthProvider = ({ children }) => {
         setUser(res.data);
       })
       .catch((err) => {
-        console.log("Profile Error:" , err)
+        console.log("Profile Error:", err);
         // localStorage.removeItem("token")
-        localStorage.removeItem("token")
-        sessionStorage.removeItem("token")
+        localStorage.removeItem("token");
+        sessionStorage.removeItem("token");
         setUser(null);
-
       })
       .finally(() => setLoading(false));
   }, []);
 
-  const login = (token, user, remember) => {
+  const login = async (token, user,) => {
     console.log("Logging in: ", token, user);
-    // localStorage.setItem("token", token);
-    if (remember) {
-      localStorage.setItem("token", token);
+    localStorage.setItem("token", token);
+    // if (remember) {
+    //   localStorage.setItem("token", token);
+    // } else {
+    //   sessionStorage.setItem("token", token);
+    // }
+    // setUser(user);
+
+    try {
+      const res = await getProfile(); // 👈 always fetch fresh profile
+      setUser(res.data);
+    } catch (error) {
+      console.error("Profile fetch failed after login:", error);
     }
-    else{
-      sessionStorage.setItem("token", token)
-    }
-    setUser(user);
   };
 
   const logout = () => {

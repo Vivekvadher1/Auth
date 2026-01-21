@@ -7,7 +7,7 @@ import Profile from "./pages/Profile";
 import Navbar from "./component/Navbar";
 import About from "./pages/About";
 import Footer from "./component/Footer";
-// import Admin from "./pages/Admin";
+ import Admin from "./pages/Admin";
 // import Layout from "./component/Layout";
 
 function App() {
@@ -21,7 +21,7 @@ function App() {
         <Route path="/about" element={<About/> } />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        {/* <Route path="/admin" element={<Admin/>} /> */}
+        <Route path="/admin" element={<Admin/>} />
 
         {/* Protected Route */}
         <Route

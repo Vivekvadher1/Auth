@@ -13,7 +13,7 @@ function Home() {
     <HomeWrapper>
       <HeroSection>
         <HeroText>
-          <HeroTitle>Welcome to Authify </HeroTitle>
+          <HeroTitle>Welcome to Authify</HeroTitle>
           <HeroSubtitle>
             A modern authentication system built with React, Node.js, and JWT.
             Secure login, register, and profile management — production ready.
