@@ -3,38 +3,46 @@ import { AuthContext } from "../context/AuthContext";
 import {
   ProfileWrapper,
   ProfileCard,
+  AvatarWrapper,
   Avatar,
+  AdminBadge,
   Name,
   Email,
+  RoleText,
   LogoutButton,
-  RoleBadge,
+  TabletStyles,
+  MobileStyles,
 } from "../styles/ProfileStyles";
+
+import { MdAdminPanelSettings } from "react-icons/md";
 
 const Profile = () => {
   const { user, logout } = useContext(AuthContext);
 
-  if (!user) return <p> Loading.....</p>;
+  if (!user) return null;
 
   return (
     <ProfileWrapper>
-      <ProfileCard>
-        <Avatar>{user?.name?.charAt(0)?.toUpperCase()}</Avatar>
+        <ProfileCard role={user.role}>
+            <AvatarWrapper>
+              <Avatar>{user.name.charAt(0).toUpperCase()}</Avatar>
 
-        <Name> Name : {user.name}</Name>
-        <Email> Email : {user.email}</Email>
+              {/* 👑 Admin Badge */}
+              {user.role === "admin" && (
+                <AdminBadge>
+                  {" "}
+                  <MdAdminPanelSettings size={16} />{" "}
+                </AdminBadge>
+              )}
+            </AvatarWrapper>
 
-        {/* <p>Role : {user.role} </p>
+            <Name>{user.name}</Name>
+            <Email>{user.email}</Email>
 
-        {user?.role === "admin" && (
-          <p style={{ color: "red" }}>You are an Admin</p>
-        )} */}
+            <RoleText role={user.role}>Role: {user.role}</RoleText>
 
-        <RoleBadge $admin={user.role === "admin"}>
-          {user.role === "admin" ? "Admin" : "User"}
-        </RoleBadge>
-
-        <LogoutButton onClick={logout}>Logout</LogoutButton>
-      </ProfileCard>
+            <LogoutButton onClick={logout}>Logout</LogoutButton>
+          </ProfileCard>
     </ProfileWrapper>
   );
 };
