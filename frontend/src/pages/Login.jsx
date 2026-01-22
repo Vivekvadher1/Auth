@@ -29,12 +29,18 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError("");
     setLoading(true);
 
     try {
       const res = await loginUser(form);
-      login(res.data.token );             // only token pass
+
+      // console.log("Login API response:", res.data); // 👈 ADD THIS
+      // console.log(" Token from backend", res.data.token); //testing
+
+      login(res.data.token, res.data.user); // Pass token and user
+
+      // console.log("Called login() from context"); // 👈 ADD THIS
+
       navigate("/profile");
     } catch (err) {
       setError(err.response?.data?.message || "Login failed");

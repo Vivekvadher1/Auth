@@ -9,5 +9,12 @@ export const registerUser = (data) => {
 };
 
 export const getProfile = () => {
-    return api.get("/auth/profile");
+    const token = localStorage.getItem("token") || sessionStorage.getItem("token");
+
+    return api.get("/auth/profile", {
+        headers:{
+           Authorization : `Bearer ${token}`, 
+        }
+    });
+
 }

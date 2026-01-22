@@ -18,6 +18,7 @@ const AuthProvider = ({ children }) => {
       return;
     }
 
+  console.log("Found token on reload:", token);
     setLoading(true);
 
     getProfile()
@@ -35,18 +36,21 @@ const AuthProvider = ({ children }) => {
       .finally(() => setLoading(false));
   }, []);
 
-  const login = async (token, user,) => {
-    console.log("Logging in: ", token, user);
-    localStorage.setItem("token", token);
-    // if (remember) {
-    //   localStorage.setItem("token", token);
-    // } else {
-    //   sessionStorage.setItem("token", token);
-    // }
-    // setUser(user);
+  const login = async (token, user, remember) => {
+
+    // console.log("Logging in: ", token, user);          // testing
+   
+    if (remember) {
+      localStorage.setItem("token", token);
+    } else {
+      sessionStorage.setItem("token", token);
+    }
+    setUser(user);
 
     try {
       const res = await getProfile(); // 👈 always fetch fresh profile
+      console.log("Loaded ", res.data);
+      
       setUser(res.data);
     } catch (error) {
       console.error("Profile fetch failed after login:", error);
@@ -55,6 +59,7 @@ const AuthProvider = ({ children }) => {
 
   const logout = () => {
     localStorage.removeItem("token");
+    sessionStorage.removeItem("token");
     setUser(null);
   };
 
