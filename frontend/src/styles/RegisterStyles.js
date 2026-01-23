@@ -6,6 +6,7 @@ export const FormWrapper = styled.div`
   justify-content: center;
   align-items: center;
   background: linear-gradient(135deg, #f5f7fa, #e8ecf3);
+  padding: 1rem;
 `;
 
 export const StyledForm = styled.form`
@@ -28,7 +29,7 @@ export const Title = styled.h2`
 `;
 
 export const Input = styled.input`
-   width :100%;
+  width: 100%;
   padding: 10px 45px 10px 12px;
   border: 1px solid #ddd;
   border-radius: 8px;
@@ -73,7 +74,7 @@ export const PasswordWrapper = styled.div`
 `;
 
 export const EyeIcon = styled.span`
- position: absolute;
+  position: absolute;
   right: 12px;
   top: 50%;
   transform: translateY(-50%);
@@ -83,18 +84,16 @@ export const EyeIcon = styled.span`
   align-items: center;
   justify-content: center;
   height: 100%;
-  z-index: 10; 
+  z-index: 10;
 `;
 
 export const StrengthText = styled.p`
   font-size: 0.85rem;
   margin-top: -0.4rem;
   color: ${(props) =>
-        props.level === "Strong"
-            ? "#27ae60"
-            : props.level === "Medium"
-                ? "#f39c12"
-                : "#e74c3c"};
+    props.level === "Strong"
+      ? "#27ae60"
+      : props.level === "Medium"
+        ? "#f39c12"
+        : "#f04c39"};
 `;
-
-

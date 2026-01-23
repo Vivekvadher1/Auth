@@ -8,6 +8,11 @@ export const Nav = styled.nav`
   align-items: center;
   justify-content: space-between;
   padding: 0 1.2rem;
+
+  @media (max-width: 768px) {
+    height: 52px;
+    padding: 0 1rem;
+  }
 `;
 
 export const Logo = styled.h2`
@@ -71,3 +76,5 @@ export const CartIcon = styled.div`
   cursor: pointer;
   margin-left: 0.5rem;
 `;
+
+

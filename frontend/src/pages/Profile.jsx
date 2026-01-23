@@ -10,8 +10,7 @@ import {
   Email,
   RoleText,
   LogoutButton,
-  TabletStyles,
-  MobileStyles,
+  
 } from "../styles/ProfileStyles";
 
 import { MdAdminPanelSettings } from "react-icons/md";

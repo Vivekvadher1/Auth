@@ -1,11 +1,11 @@
 import styled from "styled-components";
 
 export const HomeWrapper = styled.div`
-  min-height: 80vh;
+  min-height: calc(100vh - 60px);
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 2rem;
+  padding: 1.5rem 1rem;
 `;
 
 export const HeroSection = styled.div`
