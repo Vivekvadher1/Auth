@@ -4,31 +4,31 @@ import { getProfile } from "../services/authService";
 
 export const AuthContext = createContext();
 
+const  getStoredToken = () => {
+  localStorage.getItem("token") || sessionStorage.getItem("token");
+}
+
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // const token = localStorage.getItem("token");
-    const token =
-      localStorage.getItem("token") || sessionStorage.getItem("token");
+    // Dual Storage
+     const token = getStoredToken();
 
     if (!token) {
       setLoading(false);
       return;
     }
 
-  console.log("Found token on reload:", token);
-    setLoading(true);
+    // setLoading(true);
 
     getProfile()
       .then((res) => {
         // console.log("Profile Loaded:" , res.data)
         setUser(res.data);
       })
-      .catch((err) => {
-        console.log("Profile Error:", err);
-        // localStorage.removeItem("token")
+      .catch(() => {
         localStorage.removeItem("token");
         sessionStorage.removeItem("token");
         setUser(null);
@@ -38,22 +38,19 @@ const AuthProvider = ({ children }) => {
 
   const login = async (token, user, remember) => {
 
-    // console.log("Logging in: ", token, user);          // testing
-   
     if (remember) {
       localStorage.setItem("token", token);
     } else {
       sessionStorage.setItem("token", token);
     }
-    setUser(user);
+     setUser(user);
 
     try {
       const res = await getProfile(); // 👈 always fetch fresh profile
-      console.log("Loaded ", res.data);
-      
       setUser(res.data);
     } catch (error) {
       console.error("Profile fetch failed after login:", error);
+      setUser(user);
     }
   };
 
@@ -63,6 +60,8 @@ const AuthProvider = ({ children }) => {
     setUser(null);
   };
 
+  const isAuthenticated = !!user
+
   return (
     <AuthContext.Provider
       value={{
@@ -70,6 +69,7 @@ const AuthProvider = ({ children }) => {
         login,
         logout,
         loading,
+        isAuthenticated,
       }}
     >
       {!loading && children}

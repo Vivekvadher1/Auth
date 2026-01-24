@@ -12,7 +12,7 @@ export const FormWrapper = styled.div`
 export const StyledForm = styled.form`
   width: 100%;
   max-width: 420px;
-  background: #ffffff;
+  background: ${({ theme }) => theme.colors.bgLight};
   padding: 2rem;
   border-radius: 12px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
@@ -23,7 +23,7 @@ export const StyledForm = styled.form`
 
 export const Title = styled.h2`
   text-align: center;
-  color: #333;
+  color: ${({ theme }) => theme.colors.textMain};
   margin-bottom: 5px;
   font-size: 28px;
 `;
@@ -47,7 +47,7 @@ export const Button = styled.button`
   background: linear-gradient(135deg, #ff7a18, #ffb347);
   border: none;
   border-radius: 8px;
-  color: #fff;
+  color: ${({ theme }) => theme.colors.bgLight};
   font-weight: 600;
   cursor: pointer;
   transition: 0.2s ease;
@@ -79,7 +79,7 @@ export const EyeIcon = styled.span`
   top: 50%;
   transform: translateY(-50%);
   cursor: pointer;
-  color: #555;
+  color: ${({ theme }) => theme.colors.textLight};
   display: flex;
   align-items: center;
   justify-content: center;
@@ -96,4 +96,17 @@ export const StrengthText = styled.p`
       : props.level === "Medium"
         ? "#f39c12"
         : "#f04c39"};
+`;
+
+export const RememberRow = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.85rem;
+`;
+
+export const ForgetText = styled.span`
+  color: ${({ theme }) => theme.colors.secondary};
+  cursor: pointer;
+  font-size: 15px;
 `;

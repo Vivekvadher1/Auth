@@ -6,9 +6,10 @@ const api = axios.create({
 
 // Add token to every request
 api.interceptors.request.use((config) => {
-  const token = localStorage.getItem("token") || sessionStorage.getItem("token");
-  
-    console.log("Sending token:", token);   // 👈 DEBUG
+  const token =
+    localStorage.getItem("token") || sessionStorage.getItem("token");
+
+  // console.log("Sending token:", token); // 👈 DEBUG
 
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
@@ -17,5 +18,16 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
-export default api;
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response.status === 401) {
+      localStorage.removeItem("token");
+      sessionStorage.removeItem("token");
+      window.location.href = "/login";
+    }
+    return Promise.reject(error);
+  },
+);
 
+export default api;

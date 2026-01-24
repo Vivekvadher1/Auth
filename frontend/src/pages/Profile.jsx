@@ -29,8 +29,7 @@ const Profile = () => {
               {/* 👑 Admin Badge */}
               {user.role === "admin" && (
                 <AdminBadge>
-                  {" "}
-                  <MdAdminPanelSettings size={16} />{" "}
+                  <MdAdminPanelSettings size={16} />
                 </AdminBadge>
               )}
             </AvatarWrapper>

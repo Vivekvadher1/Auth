@@ -1,7 +1,6 @@
 // protect : Checks JWT Tokens
 // adminOnly : Checks Role
 
-
 const express = require("express");
 const router = express.Router();
 const {register, login, getProfile} = require("../controllers/authController")

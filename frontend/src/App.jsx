@@ -7,22 +7,24 @@ import Profile from "./pages/Profile";
 import Navbar from "./component/Navbar";
 import About from "./pages/About";
 import Footer from "./component/Footer";
- import Admin from "./pages/Admin";
-// import Layout from "./component/Layout";
+import Admin from "./pages/Admin";
+import Error from "./pages/Error";
+
 
 function App() {
   return (
     <>
-    <Navbar/>
+      <Navbar />
       <Routes>
         {/* Public Routes */}
 
         <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About/> } />
+        <Route path="/about" element={<About />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/admin" element={<Admin/>} />
+        <Route path="/admin" element={<Admin />} />
 
+        <Route path="/403" element={<Error />} />
         {/* Protected Route */}
         <Route
           path="/profile"
@@ -32,8 +34,18 @@ function App() {
             </PrivateRoute>
           }
         />
+
+        {/* Admin only route */}
+        <Route
+          path="/admin"
+          element={
+            <PrivateRoute role="admin">
+              <Admin />
+            </PrivateRoute>
+          }
+        />
       </Routes>
-      <Footer/>
+      <Footer />
     </>
   );
 }

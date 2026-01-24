@@ -115,7 +115,7 @@ exports.login = async (req, res) => {
 };
 
 
-// Get logged in user profile
+// Get logged in user profile (Profile path)
 exports.getProfile = async (req, res) => {
     try {
         res.json({

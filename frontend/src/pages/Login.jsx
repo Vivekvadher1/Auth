@@ -12,6 +12,8 @@ import {
   Message,
   PasswordWrapper,
   EyeIcon,
+  RememberRow,
+  ForgetText,
 } from "../styles/RegisterStyles";
 
 const Login = () => {
@@ -29,21 +31,32 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (loading) return;
+
+    if (!form.email || !form.password) {
+      setError("Email and password are required");
+      return;
+    }
+
+    if (!/\S+@\S+\.\S+/.test(form.email)) {
+      setError("Please enter a valid email");
+      return;
+    }
     setLoading(true);
 
     try {
       const res = await loginUser(form);
 
-      // console.log("Login API response:", res.data); // 👈 ADD THIS
-      // console.log(" Token from backend", res.data.token); //testing
-
-      login(res.data.token, res.data.user); // Pass token and user
-
-      // console.log("Called login() from context"); // 👈 ADD THIS
-
-      navigate("/profile");
+      await login(res.data.token, res.data.user, remember); // Pass token and user(login call)
+      // Redirect based on role
+      if (res.data.user.role === "admin") {
+        navigate("/admin");
+      } else {
+        navigate("/profile");
+      }
     } catch (err) {
-      setError(err.response?.data?.message || "Login failed");
+      setError(err.response.data.message || "Login failed");
+      setForm({ ...form, password: "" });
     } finally {
       setLoading(false);
     }
@@ -53,6 +66,11 @@ const Login = () => {
     e.preventDefault();
     setForgotMessage("If this email exists, reset instructions were sent.");
     setForgotEmail("");
+  };
+
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+    if (error) setError("");
   };
 
   return (
@@ -69,7 +87,7 @@ const Login = () => {
           name="email"
           autoComplete="new-email"
           value={form.email}
-          onChange={(e) => setForm({ ...form, email: e.target.value })}
+          onChange={handleChange}
           required
         />
 
@@ -78,9 +96,10 @@ const Login = () => {
           <Input
             type={showPassword ? "text" : "password"}
             placeholder="Password"
+            name="password"
             value={form.password}
             autoComplete="new-password"
-            onChange={(e) => setForm({ ...form, password: e.target.value })}
+            onChange={handleChange}
             required
           />
 
@@ -94,14 +113,7 @@ const Login = () => {
         </PasswordWrapper>
 
         {/* Rember + Forget */}
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            fontSize: "0.85rem",
-          }}
-        >
+        <RememberRow>
           <label style={{ display: "flex", alignItems: "center", gap: "6px" }}>
             <input
               type="checkbox"
@@ -111,17 +123,10 @@ const Login = () => {
             Remember me
           </label>
 
-          <span
-            style={{
-              color: "#ff7a18",
-              cursor: "pointer",
-              fontSize: "15px",
-            }}
-            onClick={() => setShowForgot(!showForgot)}
-          >
+          <ForgetText onClick={() => setShowForgot(!showForgot)}>
             Forgot password?
-          </span>
-        </div>
+          </ForgetText>
+        </RememberRow>
 
         {/* Forgot Password UI */}
         {showForgot && (
